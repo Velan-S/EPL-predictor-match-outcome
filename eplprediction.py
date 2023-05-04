@@ -102,4 +102,4 @@ def predict():
     return render_template('form1.html', table_data=outcomes.to_dict('records'), team1=team1, team2=team2)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=Fale,host='0.0.0.0')
