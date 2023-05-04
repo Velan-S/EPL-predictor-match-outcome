@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Premier League Match Predictor</title>
+    <style>
+        body {
+        background-image: url("{{ url_for('static', filename='background.jpg') }}");
+        background-size: cover;
+        } 
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+    
+        form {
+            width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    
+        select {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    
+        input[type="submit"] {
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 200px;
+            height: 40px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+    
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+    
+        .team1 {
+            background-color: #e6f9ff;
+        }
+    
+        .team2 {
+            background-color: #ffe6e6;
+        }
+    
+        .draw {
+            background-color: #f2f2f2;
+        }
+    
+        .team1 td:nth-child(2), .team2 td:nth-child(2) {
+            color: green;
+            font-weight: bold;
+        }
+    
+        .draw td:nth-child(2) {
+            color: #333;
+        }
+    </style>
+    
+  </head>
+  <body style="background-image:url('background.jpg');  background-repeat: no-repeat; background-size: cover;">
+    <h1>Premier League Match Predictor</h1>
+    <form action="/predict" method="get">
+      <label for="team1">Team 1:</label>
+      <select id="team1" name="team1">
+        <option value="Arsenal">Arsenal</option>
+        <option value="Aston Villa">Aston Villa</option>
+        <option value="Brentford">Brentford</option>
+        <option value="Brighton and Hove Albion">Brighton and Hove Albion</option>
+        <option value="Burnley">Burnley</option>
+        <option value="Chelsea">Chelsea</option>
+        <option value="Crystal Palace">Crystal Palace</option>
+        <option value="Everton">Everton</option>
+        <option value="Leeds United">Leeds United</option>
+        <option value="Leicester City">Leicester City</option>
+        <option value="Liverpool">Liverpool</option>
+        <option value="Manchester City">Manchester City</option>
+        <option value="Manchester United">Manchester United</option>
+        <option value="Newcastle United">Newcastle United</option>
+        <option value="Norwich City">Norwich City</option>
+        <option value="Southampton">Southampton</option>
+        <option value="Tottenham Hotspur">Tottenham Hotspur</option>
+        <option value="Watford">Watford</option>
+        <option value="West Ham United">West Ham United</option>
+        <option value="Wolverhampton Wanderers">Wolverhampton Wanderers</option>
+      </select>
+
+      <label for="team2">Team 2:</label>
+      <select id="team2" name="team2">
+        <option value="Arsenal">Arsenal</option>
+        <option value="Aston Villa">Aston Villa</option>
+        <option value="Brentford">Brentford</option>
+        <option value="Brighton and Hove Albion">Brighton and Hove Albion</option>
+        <option value="Burnley">Burnley</option>
+        <option value="Chelsea">Chelsea</option>
+        <option value="Crystal Palace">Crystal Palace</option>
+        <option value="Everton">Everton</option>
+        <option value="Leeds United">Leeds United</option>
+        <option value="Leicester City">Leicester City</option>
+        <option value="Liverpool">Liverpool</option>
+        <option value="Manchester City">Manchester City</option>
+        <option value="Manchester United">Manchester United</option>
+        <option value="Newcastle United">Newcastle United</option>
+        <option value="Norwich City">Norwich City</option>
+        <option value="Southampton">Southampton</option>
+        <option value="Tottenham Hotspur">Tottenham Hotspur</option>
+        <option value="Watford">Watford</option>
+        <option value="West Ham United">West Ham United</option>
+        <option value="Wolverhampton Wanderers">Wolverhampton Wanderers</option>
+      </select>
+
+      <br><br>
+      <input type="submit" value="Predict">
+    </form>
+  </body>
+  <div style="display: flex; justify-content: center;">
+    <div>
+      <h2>Predicted Match Outcome</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Outcome</th>
+            <th>Probability (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in table_data %}
+            {% if row['Probability'] > 50 %}
+              <tr class="team1">
+                <td>{{ row['Outcome'] }}</td>
+                <td>{{ row['Probability'] }}</td>
+              </tr>
+            {% elif row['Probability'] < 50 %}
+              <tr class="team2">
+                <td>{{ row['Outcome'] }}</td>
+                <td>{{ row['Probability'] }}</td>
+              </tr>
+            {% else %}
+              <tr class="draw">
+                <td>{{ row['Outcome'] }}</td>
+                <td>{{ row['Probability'] }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </body>
+  </html>
+ 
+  
